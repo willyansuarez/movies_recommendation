@@ -108,5 +108,14 @@ def get_director( nombre_director: str ):
 #    return res   
 
 @app.get('/recomendacion/{titulo}')
-res = fr.recommend(titulo)
-return res    
+def recommend(movie):
+    movie_index = new_df[new_df["title"] == movie].index[0]
+    distances = similarity[movie_index]
+    movie_list = sorted(list(enumerate(distances)), reverse=True, key=lambda x: x[1])[1:6]
+    
+    pel = []
+    for i in movie_list:
+        list_pel = new_df.iloc[i[0]].title
+        pel.append(list_pel)
+        # print(i[0])
+    return pel  
