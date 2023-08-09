@@ -1,4 +1,4 @@
-python3==3.10
+python3==3.9
 fastapi==0.101.0
 fasteners==0.14.1
 fastjsonschema==2.16.2
