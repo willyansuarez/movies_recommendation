@@ -1,19 +1,9 @@
 from fastapi import FastAPI
 import uvicorn
 import pandas as pd
-from sklearn.feature_extraction.text import CountVectorizer
-from nltk.stem.porter import PorterStemmer
-from sklearn.metrics.pairwise import cosine_similarity
-
+import function_recommend as fr
 
 df = pd.read_csv("./datasets/movies_processed.csv")
-
-new_df = pd.read_parquet("./datasets/movies_model_final.parquet")
-
-cv = CountVectorizer(max_features=5000, stop_words="english")
-vectors = cv.fit_transform(new_df["tags"]).toarray()
-
-similarity = cosine_similarity(vectors)
 
 app = FastAPI()
 
@@ -111,15 +101,8 @@ def get_director( nombre_director: str ):
 
 
 # # ML
-@app.get('/recomendacion/{titulo}')
-def recomendacion(titulo:str):
-    movie_index = new_df[new_df["title"] == movie].index[0]
-    distances = similarity[movie_index]
-    movie_list = sorted(list(enumerate(distances)), reverse=True, key=lambda x: x[1])[1:6]
-    
-    pel = []
-    for i in movie_list:
-        list_pel = new_df.iloc[i[0]].title
-        pel.append(list_pel)
-        # print(i[0])
-    return pel    
+# @app.get('/recomendacion/{titulo}')
+# def recomendacion(titulo:str):
+#     '''Ingresas un nombre de pelicula y te recomienda las similares en una lista'''
+#     res = fr.recommend(titulo)
+#     return res    
