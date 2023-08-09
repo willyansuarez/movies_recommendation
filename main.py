@@ -3,7 +3,7 @@ import uvicorn
 import pandas as pd
 import function_recommend as fr
 
-df = pd.read_csv("/home/willian/modelo_recomendacion_peliculas/movies_recommendation/datasets/movies_processed.csv")
+df = pd.read_csv("./datasets/movies_processed.csv")
 
 app = FastAPI()
 
