@@ -3,7 +3,7 @@ from nltk.stem.porter import PorterStemmer
 from sklearn.metrics.pairwise import cosine_similarity
 import pandas as pd
 
-new_df = pd.read_parquet("/home/willian/modelo_recomendacion_peliculas/movies_recommendation/datasets/movies_model_final.parquet")
+new_df = pd.read_parquet("./datasets/movies_model_final.parquet")
 
 cv = CountVectorizer(max_features=5000, stop_words="english")
 vectors = cv.fit_transform(new_df["tags"]).toarray()
