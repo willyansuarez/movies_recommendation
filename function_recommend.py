@@ -5,7 +5,7 @@ import pandas as pd
 
 new_df = pd.read_parquet("./datasets/movies_model_final.parquet")
 
-cv = CountVectorizer(max_features=2000, stop_words="english")
+cv = CountVectorizer(max_features=1000, stop_words="english")
 vectors = cv.fit_transform(new_df["tags"]).toarray()
 cv = CountVectorizer(max_features=5000, stop_words="english")
 
