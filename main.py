@@ -101,8 +101,12 @@ def get_director( nombre_director: str ):
 
 
 # # ML
+# @app.get('/recomendacion/{titulo}')
+# def recomendacion(titulo:str):
+#    '''Ingresas un nombre de pelicula y te recomienda las similares en una lista'''
+#    res = fr.recommend(titulo)
+#    return res   
+
 @app.get('/recomendacion/{titulo}')
-def recomendacion(titulo:str):
-    '''Ingresas un nombre de pelicula y te recomienda las similares en una lista'''
-    res = fr.recommend(titulo)
-    return res    
+res = fr.recommend(titulo)
+return res    
