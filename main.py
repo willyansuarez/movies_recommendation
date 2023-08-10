@@ -1,9 +1,13 @@
 from fastapi import FastAPI
 import uvicorn
 import pandas as pd
-import function_recommend as fr
+
+
+# df = pd.read_csv("/home/willian/modelo_recomendacion_peliculas/movies_recommendation/datasets/movies_processed.csv")
+# df_2 = pd.read_parquet("/home/willian/modelo_recomendacion_peliculas/movies_recommendation/datasets/movies_with_recommendations.parquet")
 
 df = pd.read_csv("./datasets/movies_processed.csv")
+df_2 = pd.read_parquet("./datasets/movies_with_recommendations.parquet")
 
 app = FastAPI()
 
@@ -101,8 +105,9 @@ def get_director( nombre_director: str ):
 
 
 # # ML
-# @app.get('/recomendacion/{titulo}')
-# def recomendacion(titulo:str):
-#     '''Ingresas un nombre de pelicula y te recomienda las similares en una lista'''
-#     res = fr.recommend(titulo)
-#     return res    
+@app.get('/recomendacion/{titulo}')
+def recomendacion(titulo:str):
+    '''Ingresas un nombre de pelicula y te recomienda las similares en una lista'''
+    res = tuple(df_2[df_2["movie"] == titulo]["recommended"].item())
+    
+    return {res}    
