@@ -2,14 +2,15 @@ from fastapi import FastAPI
 import uvicorn
 import pandas as pd
 from fastapi.middleware.cors import CORSMiddleware
-
+from fastapi.encoders import jsonable_encoder
+from fastapi import HTTPException
 
 
 # df = pd.read_csv("/home/willian/modelo_recomendacion_peliculas/movies_recommendation/datasets/movies_processed.csv")
 # df_2 = pd.read_parquet("/home/willian/modelo_recomendacion_peliculas/movies_recommendation/datasets/movies_with_recommendations.parquet")
 
-df = pd.read_csv("./datasets/movies_processed.csv")
-df_2 = pd.read_parquet("./datasets/movies_with_recommendations.parquet")
+# df = pd.read_csv("./datasets/movies_processed.csv")
+# df_2 = pd.read_parquet("./datasets/movies_with_recommendations.parquet")
 
 app = FastAPI()
 
@@ -32,6 +33,7 @@ app.add_middleware(
 def peliculas_idioma( Idioma: str ):
     ''' Se ingresa un idioma (como están escritos en el dataset, no hay que traducirlos!). 
     Debe devolver la cantidad de películas producidas en ese idioma. '''        
+    df = pd.read_csv("./datasets/movies_processed.csv")
     res = df["original_language"] == Idioma
     return {"idioma": Idioma, "cantidad": str(res.sum())}
 
@@ -39,6 +41,7 @@ def peliculas_idioma( Idioma: str ):
 @app.get('/peliculas_duracion/{pelicula}')
 def peliculas_duracion( Pelicula: str ):
     ''' Se ingresa una pelicula. Debe devolver la duracion y el año. '''
+    df = pd.read_csv("./datasets/movies_processed.csv")
     res = df[df["title"] == Pelicula]
     return {"pelicula": Pelicula, "duracion": res.runtime.item(), "anio": res.release_year.item()}
 
@@ -47,6 +50,7 @@ def peliculas_duracion( Pelicula: str ):
 def franquicia( Franquicia: str ):
     '''Se ingresa la franquicia, retornando la cantidad de peliculas, ganancia
     total y promedio '''
+    df = pd.read_csv("./datasets/movies_processed.csv")
     f = df[df["belongs_to_collection"] == Franquicia]
     cant_pel = len(f)
     ganancia_total = f.revenue.sum()
@@ -56,6 +60,7 @@ def franquicia( Franquicia: str ):
 
 @app.get('/peliculas_pais/{pais}')
 def peliculas_pais( Pais: str ):
+    df = pd.read_csv("./datasets/movies_processed.csv")
     cantidad = df['production_countries'].str.contains(Pais, case=False).sum()
     datos = dict()
     
@@ -72,6 +77,7 @@ def peliculas_pais( Pais: str ):
 def productoras_exitosas( Productora: str ):
     '''Se ingresa la productora, entregandote el revenue total y la cantidad
     de peliculas que realizó.'''
+    df = pd.read_csv("./datasets/movies_processed.csv")
     producer = df[df.production_companies.str.contains(Productora)]
     return {
         'productora':Productora,
@@ -83,6 +89,7 @@ def productoras_exitosas( Productora: str ):
 @app.get('/get_director/{nombre_director}')
 def get_director( nombre_director: str ):
     ''' Se ingresa el nombre de un director que se encuentre dentro de un dataset debiendo devolver el éxito del mismo medido a través del retorno. Además, deberá devolver el nombre de cada película con la fecha de lanzamiento, retorno individual, costo y ganancia de la misma, en formato lista.'''
+    df = pd.read_csv("./datasets/movies_processed.csv")
     director = df.loc[df['crew'].str.contains(nombre_director)]
 
     revenue_total = sum(director.revenue) / sum(director.budget)
@@ -120,6 +127,7 @@ def get_director( nombre_director: str ):
 @app.get('/recomendacion/{titulo}')
 def recomendacion(titulo:str):
     '''Ingresas un nombre de pelicula y te recomienda las similares en una lista'''
+    df_2 = pd.read_parquet("./datasets/movies_with_recommendations.parquet")
     res = tuple(df_2[df_2["movie"] == titulo]["recommended"].item())
     
     return {res}    
