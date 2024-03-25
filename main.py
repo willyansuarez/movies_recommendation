@@ -4,7 +4,7 @@ import pandas as pd
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.encoders import jsonable_encoder
 from fastapi import HTTPException
-
+import os
 
 # df = pd.read_csv("/home/willian/modelo_recomendacion_peliculas/movies_recommendation/datasets/movies_processed.csv")
 # df_2 = pd.read_parquet("/home/willian/modelo_recomendacion_peliculas/movies_recommendation/datasets/movies_with_recommendations.parquet")
@@ -26,7 +26,9 @@ app.add_middleware(
 
 @app.get("/")
 def root():
-    data = {"word": "Hello Wolrd"}
+    ruta_absoluta = os.path.abspath('movies_processed.csv')
+    print(ruta_absoluta)
+    data = {"word": "Hello World", "ruta": ruta_absoluta}
     return data
 
 # @app.get('/peliculas_idioma/{idioma}')
