@@ -30,7 +30,7 @@ app.add_middleware(
 #     return data
 
 @app.get('/peliculas_idioma/{idioma}')
-def peliculas_idioma( Idioma: str ):
+async def peliculas_idioma( Idioma: str ):
     ''' Se ingresa un idioma (como están escritos en el dataset, no hay que traducirlos!). 
     Debe devolver la cantidad de películas producidas en ese idioma. '''        
     df = pd.read_csv("movies_processed.csv")
@@ -39,7 +39,7 @@ def peliculas_idioma( Idioma: str ):
 
 
 @app.get('/peliculas_duracion/{pelicula}')
-def peliculas_duracion( Pelicula: str ):
+async def peliculas_duracion( Pelicula: str ):
     ''' Se ingresa una pelicula. Debe devolver la duracion y el año. '''
     df = pd.read_csv("movies_processed.csv")
     res = df[df["title"] == Pelicula]
@@ -47,7 +47,7 @@ def peliculas_duracion( Pelicula: str ):
 
 
 @app.get('/franquicia/{franquicia}')
-def franquicia( Franquicia: str ):
+async def franquicia( Franquicia: str ):
     '''Se ingresa la franquicia, retornando la cantidad de peliculas, ganancia
     total y promedio '''
     df = pd.read_csv("movies_processed.csv")
@@ -59,7 +59,7 @@ def franquicia( Franquicia: str ):
 
 
 @app.get('/peliculas_pais/{pais}')
-def peliculas_pais( Pais: str ):
+async def peliculas_pais( Pais: str ):
     df = pd.read_csv("movies_processed.csv")
     cantidad = df['production_countries'].str.contains(Pais, case=False).sum()
     datos = dict()
@@ -74,7 +74,7 @@ def peliculas_pais( Pais: str ):
 
 
 @app.get('/productoras_exitosas/{productora}')
-def productoras_exitosas( Productora: str ):
+async def productoras_exitosas( Productora: str ):
     '''Se ingresa la productora, entregandote el revenue total y la cantidad
     de peliculas que realizó.'''
     df = pd.read_csv("movies_processed.csv")
@@ -87,7 +87,7 @@ def productoras_exitosas( Productora: str ):
 
 
 @app.get('/get_director/{nombre_director}')
-def get_director( nombre_director: str ):
+async def get_director( nombre_director: str ):
     ''' Se ingresa el nombre de un director que se encuentre dentro de un dataset debiendo devolver el éxito del mismo medido a través del retorno. Además, deberá devolver el nombre de cada película con la fecha de lanzamiento, retorno individual, costo y ganancia de la misma, en formato lista.'''
     df = pd.read_csv("movies_processed.csv")
     director = df.loc[df['crew'].str.contains(nombre_director)]
@@ -125,7 +125,7 @@ def get_director( nombre_director: str ):
 
 # # ML
 @app.get('/recomendacion/{titulo}')
-def recomendacion(titulo:str):
+async def recomendacion(titulo:str):
     '''Ingresas un nombre de pelicula y te recomienda las similares en una lista'''
     df_2 = pd.read_parquet("movies_with_recommendations.parquet")
     res = tuple(df_2[df_2["movie"] == titulo]["recommended"].item())
