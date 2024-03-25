@@ -3,14 +3,6 @@ import uvicorn
 import pandas as pd
 from fastapi.middleware.cors import CORSMiddleware
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # O puedes especificar los dominios permitidos
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
 
 
 # df = pd.read_csv("/home/willian/modelo_recomendacion_peliculas/movies_recommendation/datasets/movies_processed.csv")
@@ -20,6 +12,16 @@ df = pd.read_csv("./datasets/movies_processed.csv")
 df_2 = pd.read_parquet("./datasets/movies_with_recommendations.parquet")
 
 app = FastAPI()
+
+# para permitir peticiones desde fuera del servidor
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # O puedes especificar los dominios permitidos
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 # @app.get("/")
 # def root():
