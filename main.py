@@ -24,22 +24,23 @@ app.add_middleware(
 )
 
 
-# @app.get("/")
-# def root():
-#     ruta_absoluta = os.path.abspath('movies_processed.csv')
-#     print(ruta_absoluta)
-#     data = {"word": "Hello World", "ruta": ruta_absoluta}
-#     return data
+@app.get("/")
+def root():
+    # ruta_absoluta = os.path.abspath('movies_processed.csv')
+    ruta = os.getcwd()
+    print(ruta_absoluta)
+    data = {"word": "Hello World", "ruta": ruta}
+    return data
 # #    retorna: {"word":"Hello World","ruta":"/opt/render/project/src/movies_processed.csv"} 
 
 
-@app.get('/peliculas_idioma/{idioma}')
-async def peliculas_idioma( Idioma: str ):
-    ''' Se ingresa un idioma (como están escritos en el dataset, no hay que traducirlos!). 
-    Debe devolver la cantidad de películas producidas en ese idioma. '''        
-    df = pd.read_csv("/opt/render/project/src/movies_processed.csv")
-    res = df["original_language"] == Idioma
-    return {"idioma": Idioma, "cantidad": str(res.sum())}
+# @app.get('/peliculas_idioma/{idioma}')
+# async def peliculas_idioma( Idioma: str ):
+#     ''' Se ingresa un idioma (como están escritos en el dataset, no hay que traducirlos!). 
+#     Debe devolver la cantidad de películas producidas en ese idioma. '''        
+#     df = pd.read_csv("movies_processed.csv")
+#     res = df["original_language"] == Idioma
+#     return {"idioma": Idioma, "cantidad": str(res.sum())}
 
 
 # @app.get('/peliculas_duracion/{pelicula}')
