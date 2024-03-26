@@ -4,7 +4,7 @@ import pandas as pd
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.encoders import jsonable_encoder
 from fastapi import HTTPException
-import os
+# import os
 
 # df = pd.read_csv("/home/willian/modelo_recomendacion_peliculas/movies_recommendation/datasets/movies_processed.csv")
 # df_2 = pd.read_parquet("/home/willian/modelo_recomendacion_peliculas/movies_recommendation/datasets/movies_with_recommendations.parquet")
@@ -15,7 +15,7 @@ import os
 # df = pd.read_csv("./datasets/movies_processed.csv") # 3
 # df = pd.read_csv("/datasets/movies_processed.csv") # 4
 # df = pd.read_csv("/movies_processed.csv") # 5
-df = pd.read_csv("./movies_processed.csv") # 6
+# df = pd.read_csv("./movies_processed.csv") # 6
 # df_2 = pd.read_parquet("./datasets/movies_with_recommendations.parquet")
 
 app = FastAPI()
@@ -45,6 +45,13 @@ async def peliculas_idioma( Idioma: str ):
     ''' Se ingresa un idioma (como están escritos en el dataset, no hay que traducirlos!). 
     Debe devolver la cantidad de películas producidas en ese idioma. '''        
     # df = pd.read_csv("movies_processed.csv")
+    # df = pd.read_csv("./datasets/movies_processed.csv")
+    df = pd.read_csv("datasets/movies_processed.csv") # 1
+    # df = pd.read_csv("movies_recommendation/datasets/movies_processed.csv") # 2
+    # df = pd.read_csv("./datasets/movies_processed.csv") # 3
+    # df = pd.read_csv("/datasets/movies_processed.csv") # 4
+    # df = pd.read_csv("/movies_processed.csv") # 5
+    # df = pd.read_csv("./movies_processed.csv") # 6
     res = df["original_language"] == Idioma
     return {"idioma": Idioma, "cantidad": str(res.sum())}
 
