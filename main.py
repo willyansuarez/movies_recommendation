@@ -28,7 +28,7 @@ app.add_middleware(
 def root():
     # ruta_absoluta = os.path.abspath('movies_processed.csv')
     ruta = os.getcwd()
-    print(ruta_absoluta)
+    # print(ruta_absoluta)
     data = {"word": "Hello World", "ruta": ruta}
     return data
 # #    retorna: {"word":"Hello World","ruta":"/opt/render/project/src/movies_processed.csv"} 
