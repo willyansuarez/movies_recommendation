@@ -48,8 +48,8 @@ async def peliculas_idioma( Idioma: str ):
     # df = pd.read_csv("./datasets/movies_processed.csv")
     
     # df = pd.read_csv("datasets/movies_processed.csv") # 1
-    df = pd.read_csv("movies_recommendation/datasets/movies_processed.csv") # 2
-    # df = pd.read_csv("./datasets/movies_processed.csv") # 3
+    # df = pd.read_csv("movies_recommendation/datasets/movies_processed.csv") # 2
+    df = pd.read_csv("./datasets/movies_processed.csv") # 3
     # df = pd.read_csv("/datasets/movies_processed.csv") # 4
     # df = pd.read_csv("/movies_processed.csv") # 5
     # df = pd.read_csv("./movies_processed.csv") # 6
