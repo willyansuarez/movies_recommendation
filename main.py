@@ -10,6 +10,7 @@ import os
 # df_2 = pd.read_parquet("/home/willian/modelo_recomendacion_peliculas/movies_recommendation/datasets/movies_with_recommendations.parquet")
 
 # df = pd.read_csv("./datasets/movies_processed.csv")
+df = pd.read_csv("datasets/movies_processed.csv") # 1
 # df_2 = pd.read_parquet("./datasets/movies_with_recommendations.parquet")
 
 app = FastAPI()
@@ -24,23 +25,23 @@ app.add_middleware(
 )
 
 
-@app.get("/")
-def root():
-    # ruta_absoluta = os.path.abspath('movies_processed.csv')
-    ruta = os.getcwd()
-    # print(ruta_absoluta)
-    data = {"word": "Hello World", "ruta": ruta}
-    return data
-# #    retorna: {"word":"Hello World","ruta":"/opt/render/project/src/movies_processed.csv"} 
+# @app.get("/")
+# def root():
+#     # ruta_absoluta = os.path.abspath('movies_processed.csv')
+#     ruta = os.getcwd()
+#     # print(ruta_absoluta)
+#     data = {"word": "Hello World", "ruta": ruta}
+#     return data
+# #   os.path retorna: {"word":"Hello World","ruta":"/opt/render/project/src/movies_processed.csv"} 
+# #   os.getcwd retorna {"word":"Hello World","ruta":"/opt/render/project/src"}
 
-
-# @app.get('/peliculas_idioma/{idioma}')
-# async def peliculas_idioma( Idioma: str ):
-#     ''' Se ingresa un idioma (como están escritos en el dataset, no hay que traducirlos!). 
-#     Debe devolver la cantidad de películas producidas en ese idioma. '''        
-#     df = pd.read_csv("movies_processed.csv")
-#     res = df["original_language"] == Idioma
-#     return {"idioma": Idioma, "cantidad": str(res.sum())}
+@app.get('/peliculas_idioma/{idioma}')
+async def peliculas_idioma( Idioma: str ):
+    ''' Se ingresa un idioma (como están escritos en el dataset, no hay que traducirlos!). 
+    Debe devolver la cantidad de películas producidas en ese idioma. '''        
+    # df = pd.read_csv("movies_processed.csv")
+    res = df["original_language"] == Idioma
+    return {"idioma": Idioma, "cantidad": str(res.sum())}
 
 
 # @app.get('/peliculas_duracion/{pelicula}')
