@@ -45,13 +45,12 @@ async def peliculas_idioma( Idioma: str ):
     ''' Se ingresa un idioma (como están escritos en el dataset, no hay que traducirlos!). 
     Debe devolver la cantidad de películas producidas en ese idioma. '''        
     # df = pd.read_csv("movies_processed.csv")
-    # df = pd.read_csv("./datasets/movies_processed.csv")
-    
+        
     # df = pd.read_csv("datasets/movies_processed.csv") # 1
     # df = pd.read_csv("movies_recommendation/datasets/movies_processed.csv") # 2
     # df = pd.read_csv("./datasets/movies_processed.csv") # 3
-    df = pd.read_csv("/datasets/movies_processed.csv") # 4
-    # df = pd.read_csv("/movies_processed.csv") # 5
+    # df = pd.read_csv("/datasets/movies_processed.csv") # 4
+    df = pd.read_csv("/movies_processed.csv") # 5
     # df = pd.read_csv("./movies_processed.csv") # 6
     res = df["original_language"] == Idioma
     return {"idioma": Idioma, "cantidad": str(res.sum())}
