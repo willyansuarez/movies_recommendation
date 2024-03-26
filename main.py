@@ -10,7 +10,7 @@ from fastapi import HTTPException
 # df_2 = pd.read_parquet("/home/willian/modelo_recomendacion_peliculas/movies_recommendation/datasets/movies_with_recommendations.parquet")
 
 
-df = pd.read_csv("./datasets/movies_processed.csv")
+df = pd.read_csv("datasets/movies_processed.csv")
 df_2 = pd.read_parquet("datasets/movies_with_recommendations.parquet")
 
 app = FastAPI(
