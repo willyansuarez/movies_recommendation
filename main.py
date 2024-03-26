@@ -8,6 +8,7 @@ from fastapi import HTTPException
 
 # df = pd.read_csv("/home/willian/modelo_recomendacion_peliculas/movies_recommendation/datasets/movies_processed.csv")
 # df_2 = pd.read_parquet("/home/willian/modelo_recomendacion_peliculas/movies_recommendation/datasets/movies_with_recommendations.parquet")
+df = pd.read_csv("movies_processed.csv")
 
 # df = pd.read_csv("./datasets/movies_processed.csv")
 # df = pd.read_csv("datasets/movies_processed.csv") # 1
@@ -18,7 +19,10 @@ from fastapi import HTTPException
 # df = pd.read_csv("./movies_processed.csv") # 6
 # df_2 = pd.read_parquet("./datasets/movies_with_recommendations.parquet")
 
-app = FastAPI()
+app = FastAPI(
+    title = "Películas: Consultas y Recomendaciones", 
+    description = "API que permite realizar consultas sobre películas personalizadas"
+)
 
 # para permitir peticiones desde fuera del servidor
 app.add_middleware(
@@ -45,13 +49,6 @@ async def peliculas_idioma( Idioma: str ):
     ''' Se ingresa un idioma (como están escritos en el dataset, no hay que traducirlos!). 
     Debe devolver la cantidad de películas producidas en ese idioma. '''        
     # df = pd.read_csv("movies_processed.csv")
-        
-    # df = pd.read_csv("datasets/movies_processed.csv") # 1
-    # df = pd.read_csv("movies_recommendation/datasets/movies_processed.csv") # 2
-    # df = pd.read_csv("./datasets/movies_processed.csv") # 3
-    # df = pd.read_csv("/datasets/movies_processed.csv") # 4
-    # df = pd.read_csv("/movies_processed.csv") # 5
-    df = pd.read_csv("./movies_processed.csv") # 6
     res = df["original_language"] == Idioma
     return {"idioma": Idioma, "cantidad": str(res.sum())}
 
